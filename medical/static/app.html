@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Appointment Scheduler for Sample Collection</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="img"></div>
+    <h1 align="center">Appointment Scheduler for Sample Collection</h1>
+    <div class="form">
+      <h2>Scheduing Date</h2>
+      <input
+        class="age"
+        type="text"
+        id="date"
+        class="floatLabel"
+        name="Squareft"
+        value="2022-01-03 00:00:00"
+      />
+
+      <h2>Number of Agents available</h2>
+      <input
+        class="time_taken_for_sample_collection"
+        type="text"
+        id="no_of_agents"
+        class="floatLabel"
+        name="Squareft"
+        value="3"
+      />
+
+      
+    </div>
+
+    <div class="results">
+      <button class="submit" onclick="sendDetails()" type="button">
+        Start Clustering
+      </button>
+      <div id="uiSample_estimation" class="result" ><h2 id="nextpage"> 
+      </h2></div>
+    </div>
+  </body>
+
+  <script>
+    async function sendDetails() {
+      document.getElementById("nextpage").innerHTML="Clustering on process"
+      let date = document.getElementById("date").value;
+      
+      let no_of_agents = document.getElementById("no_of_agents").value;
+      
+      const rawResponse = await fetch('/generate_clusters', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          date,
+          no_of_agents
+          
+        })
+      })
+      
+      const response = await rawResponse.json();
+      console.log("response", response)
+
+      
+      if (response.success) window.location.href='/app2'
+      
+
+      
+      
+      // console.log(
+      //   age,
+      //   sampleCollectionTime,
+      //   labLocation,
+      //   travelTime,
+      //   gender,
+      //   testName,
+      //   sampleStorage,
+      //   trafficConditions
+      // );
+    }
+  </script>
+</html>

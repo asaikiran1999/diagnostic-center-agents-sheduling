@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Appointment Scheduler for Sample Collection</title>
+    <link rel="stylesheet" href="./app.css" />
+    <style type="text/css">
+      .mystyle {
+    margin-left: auto;
+    margin-right: auto;
+     
+   }
+   .mystyle table {
+                   border-collapse: collapse;
+               margin: 0px auto; 
+               
+               }
+               .mystyle th {
+                   background-color:#4a4127;
+                   Color:white;
+               }
+              .mystyle th, td {
+                   width:50px;
+                   text-align:center;
+                   border:1px solid black;
+                   padding:5px;
+                   
+               }
+               
+               .mystyle{
+                   border-right:hidden;
+               }
+               .mystyle {
+                   border-collapse:separate;
+                   border-spacing:0 15px;
+               }
+               .mystyle h1 {
+                   color:green;
+               }
+   body {
+     background-color: #d7e9d1;
+   }    </style>
+  </head>
+  <body>
+    <div class="img"></div>
+    <h1 align="center">Appointment Scheduler for Sample Collection</h1>
+    <div class="form">
+      <h2>Agent ID</h2>
+      <input
+        class="time_taken_for_sample_collection"
+        type="text"
+        id="agent_id"
+        class="floatLabel"
+        name="Squareft"
+        value="3"
+      />
+
+      
+    </div>
+
+    <div class="results">
+      <button class="submit" onclick="sendDetails()" type="button">
+        Show Agent Schedule
+      </button>
+      <button class="submit" onclick="window.location.href='/'" type="button">
+        back to clustering
+      </button>
+    </div>
+    <h1>Schedule of Agent:</h1>
+  </body>
+    <div id='table' class='mystyle'> </div>
+
+  <script>
+    function makeTableHTML(myArray) {
+      var result = "<table class='mystyle' border=1><tr><th>Availabilty time (Patient)</th><th>Patient ID </th><th>patient location</th><th>  Latitudes and Longitudes (Patient)</th><th>Diagnostic Centers</th><th>Age</th><th>Gender</th></th><th>Test name</th><th>Sample</th><th>Way Of Storage Of Sample</th></tr>";
+
+      for(var i=0; i<myArray.length; i++) {
+          result += "<tr>";
+          for(var j=0; j<myArray[i].length; j++){
+              result += "<td>"+myArray[i][j]+"</td>";
+          }
+          result += "</tr>";
+      }
+      result += "</table>";
+
+      return result;
+    }
+    async function sendDetails() {
+      
+      let agent_id = document.getElementById("agent_id").value;
+      
+      const rawResponse = await fetch('/show_agent_shedule', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          agent_id
+          
+        })
+      })
+      
+      const response = await rawResponse.json();
+      //console.log("response", response)
+
+      
+      if (response.success){
+        console.log(response)
+        r = makeTableHTML(JSON.parse(response.data))
+        document.getElementById("table").innerHTML=r
+      }
+      
+
+      
+      
+      // console.log(
+      //   age,
+      //   sampleCollectionTime,
+      //   labLocation,
+      //   travelTime,
+      //   gender,
+      //   testName,
+      //   sampleStorage,
+      //   trafficConditions
+      // );
+    }
+  </script>
+</html>
