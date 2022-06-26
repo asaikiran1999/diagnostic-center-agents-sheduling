@@ -5,5 +5,5 @@ Method : I used unsupervised learning to solve this problem. Under selected colu
 
 Note : Here each Agent is considered as particular cluster.
 
-TEchnologies used: python,html,javascript,css,Flask
+Technologies used: python,html,javascript,css,Flask
 <h1> <a href="https://appointmentschedulermed.herokuapp.com/">click here</a>to view my project<h1>
